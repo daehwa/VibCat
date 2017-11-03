@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VibCat.iml" filepath="$PROJECT_DIR$/VibCat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidlibsvm-release/androidlibsvm-release.iml" filepath="$PROJECT_DIR$/androidlibsvm-release/androidlibsvm-release.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

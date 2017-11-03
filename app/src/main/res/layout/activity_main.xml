@@ -15,6 +15,16 @@
         android:inputType="number"
         android:hint="test number"/>
     <TextView
+        android:id="@+id/result"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:text="RESULT"
+        android:textSize="30dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:gravity="center_horizontal"
+        tools:layout_editor_absoluteY="74dp"
+        tools:layout_editor_absoluteX="8dp" />
+    <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,14 +50,23 @@
             android:background="@color/colorPrimary"
             android:text="vibrate"
             android:onClick="Vibrate"/>
+
         <Button
             android:id="@+id/send_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
             android:background="#fcd411"
+            android:onClick="Send"
             android:text="send data"
-            android:onClick="Send"/>
+            android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/test_it"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark"
+            android:onClick="TestIt"
+            android:text="Guess!"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 
