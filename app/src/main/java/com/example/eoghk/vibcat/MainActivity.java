@@ -237,6 +237,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             case 1:
                 r = "Hand";
                 break;
+            /*case 2:
+                r = "Grab Hand";
+                break;
+            case 3:
+                r = "Floor";
+                break;*/
             default:
                 r = "Not Classified";
         }
