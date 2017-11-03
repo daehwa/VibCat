@@ -7,17 +7,19 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     String result, learning_data;
     EditText et;
     int index = 0;
+    float []  arr = new float [96];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +50,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float x = event.values[0]*50;
-        float y = event.values[1]*50;
-        float z = event.values[2]*50;
+        float x = event.values[0]*20;
+        float y = event.values[1]*20;
+        float z = event.values[2]*20;
         String str = "x: "+x+"\n"+"y: "+y+"\n"+"z: "+z;
         textView.setText(str);
-        if (isVibrating) {
+        if (isVibrating && index <96) {
             result += z + "\n";
-            learning_data += index+":"+z+" ";
+            //learning_data += " " + index + ":" + z;
+            //learning_data += "," + z;
+            arr[index] = z;
             index++;
         }
     }
@@ -64,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void Vibrate (View v){
+        if (et.getText().toString().equals("")) {
+            Toast toast = Toast.makeText(getApplicationContext(),"Please type test number", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
         vide.vibrate(1000);
         new Thread(new Runnable()
         {
@@ -71,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void run()
             {
                 result = "";
-                learning_data = et.getText().toString() +" ";
+                learning_data = et.getText().toString();
                 isVibrating = true;
 
                 try {
@@ -84,17 +94,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 index = 0;
 
                 //write in SD card
-                String state= Environment.getExternalStorageState();
-                File path= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                File  file= new File(path, "VibCatData.txt");
+                String SDCARD_FILE_PATH = "/sdcard/study/";
+                String filename = "VibCatData.txt";
+                Arrays.sort(arr);
+
+                for (int i = 0; i<96;i++){
+                    learning_data += " "+ i + ":" + arr[i];
+                }
 
                 try {
-                    FileWriter wr= new FileWriter(file,true); //두번째 파라미터 true: 기존파일에 추가할지 여부를 나타냅니다.
-                    PrintWriter writer= new PrintWriter(wr);
-                    writer.println(learning_data+"\n");
+                    FileWriter fw = new FileWriter(SDCARD_FILE_PATH + filename,true);
+                    PrintWriter writer=new PrintWriter(fw, true);
+                    writer.write(learning_data+"\n");
                     writer.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }

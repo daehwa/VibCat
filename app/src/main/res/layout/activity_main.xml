@@ -12,6 +12,7 @@
         android:gravity="center"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="8dp"
+        android:inputType="number"
         android:hint="test number"/>
     <TextView
         android:id="@+id/text"
