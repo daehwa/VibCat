@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    public void Train100(View v){
+
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         float x = event.values[0]*20;
