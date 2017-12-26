@@ -41,6 +41,7 @@ public class VibCat extends AppCompatActivity implements SensorEventListener {
     TextView textView;
     TextView result_tv;
     Button vibBtn;
+    Button guessBtn;
     Vibrator vide;
     boolean isVibrating;
     String result, learning_data;
@@ -76,12 +77,49 @@ public class VibCat extends AppCompatActivity implements SensorEventListener {
         vide = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         vibBtn = (Button)findViewById(R.id.vib_btn) ;
+        guessBtn = (Button)findViewById(R.id.test_it);
 
         initMyModel();
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
+    }
+    boolean guess100_on = false;
+    int [] test_results = {0,0,0,0};
+    public void Guess100(View v){
+        guess100_on = true;
+        final Timer timer = new Timer();
+        final Handler handler = new Handler(){
+            public void handleMessage(Message msg){
+                guessBtn.performClick();
+                train_num++;
+                if (train_num > 99){
+                    timer.cancel();
+                    train_num = 0;
+                    guess100_on = false;
+
+                    et.setText("desk : "+ test_results[0] +"%\n" +
+                            "cup : "+ test_results[1] +"%\n" +
+                            "cup with water : "+ test_results[2] +"%\n" +
+                            "glass bottle : "+ test_results[3] +"%\n");
+
+                    test_results = new int []{0,0,0,0};
+                }
+            }
+        };
+        //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
+        TimerTask myTask = new TimerTask() {
+            public void run() {
+                new Thread(){
+                    public void run(){
+                        Message msg = handler.obtainMessage();
+                        handler.sendMessage(msg);
+                    }
+                }.start();
+            }
+        };
+        timer.schedule(myTask, 1000, 1500); // 1초후 첫실행, 1초마다 계속실행
     }
 
     public void Train100(View v){
@@ -352,6 +390,10 @@ public class VibCat extends AppCompatActivity implements SensorEventListener {
                 max_of_result=res[i];
                 pos = i;
             }
+        }
+
+        if (guess100_on){
+            test_results[pos]++;
         }
         switch (pos){
             case 0:

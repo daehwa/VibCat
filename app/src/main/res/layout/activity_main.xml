@@ -81,6 +81,14 @@
                 android:onClick="Train100"
                 android:text="Train100"
                 android:textColor="@android:color/white" />
+            <Button
+                android:id="@+id/guess100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/black"
+                android:onClick="Guess100"
+                android:text="Guess100"
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </LinearLayout>
 
