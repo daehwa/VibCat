@@ -7,5 +7,5 @@ The name VibCat is inspired by [RadarCat](https://sachi.cs.st-andrews.ac.uk/rese
 
 [demo video](https://youtu.be/D0591qFnU5k) is now available.
 
-
+![NAVER_UUPA](./screenshot/NAVER_UUPA.png)
 ![NAVER_UUPA](./screenshot/NAVER_UUPA.pdf)
